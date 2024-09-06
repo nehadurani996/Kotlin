@@ -1,7 +1,7 @@
 package org.example
 
-fun formatter(firstName: String, secondName: String, formettor:(String,String)->String) {
-    println(formettor(firstName,secondName))
+fun formatter(firstName: String, secondName: String, formattors:(String,String)->String) {
+    println(formattors(firstName,secondName))
 }
 fun main(){
     formatter("Neha", "Durani",{x,y->
