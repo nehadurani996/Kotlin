@@ -31,5 +31,5 @@ class Program(){
 }
 
 interface MyInterface  {
-    fun execute(sum:Int)
+    fun execute(sum:Int)   // This is just a interface in the comment
 }
