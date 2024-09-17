@@ -27,22 +27,42 @@ val order2 = Order(listOf(product1,product3), true)
 val customer1 = Customer("John Smith", city1,listOf(order1))
 val customer2 = Customer("John Keith", city2,listOf(order2))
 val customer3= Customer("Alice",city3,listOf())
+val customer4= Customer("Alice",city3,listOf(order2))
 val shop= Shop("DNB Shop", listOf(customer1,customer2,customer3))
 
-fun main(){
-    println("Shp name is ${shop.name}")
-    shop.customers.forEach{println(it.name)}
-    shop.customers.forEach{println(it.city.name)}
-    shop.customers.forEach{customer->
-        customer.orders.forEach{order->
-            order.products.forEach{product->
-                println(product.name)
-            }
+fun main() {
+    val allDeliveredProducts = shop.customers.flatMap { customer ->
+        customer.orders.filter { it.isDelivered }.flatMap { order ->
+            order.products.map { it.name }
         }
     }
-    shop.customers.forEach{customer->
-        customer.orders.forEach{order->
-            println("Order Delivered ${order.isDelivered}")
+    println(allDeliveredProducts)
+    val getAllOrderedProducts = shop.customers.flatMap { customer ->
+        customer.orders.flatMap { order -> order.products.map { it.name } }
+    }
+    println(getAllOrderedProducts)
+    val allCities = shop.customers.map { it.city }
+    println(allCities)
+    val getAllOrderedProductsPrice = shop.customers.flatMap { customer ->
+        customer.orders.flatMap { order -> order.products.map { it.price } }
+    }.sum()
+    println(getAllOrderedProductsPrice)
+    val uniqueProducts = shop.customers.map { customer ->
+        customer.orders.flatMap { order ->
+            order.products.map { product -> product.name }.distinct()
         }
     }
+    println(uniqueProducts)
+    val notEmptyCustomer= shop.customers.filter { customer -> customer.orders.isNotEmpty() }
+    println(notEmptyCustomer)
+
+    val customersInBerlin = shop.customers.filter { it.city == city1 }.flatMap { customer -> customer.orders.flatMap{
+        it.products
+    }}
+    println(customersInBerlin)
+    val getDeliveredOrderByCustomer= shop.customers.flatMap {
+        customer -> customer.orders.filter { order -> order.isDelivered }
+    }
+    println(getDeliveredOrderByCustomer)
 }
+
