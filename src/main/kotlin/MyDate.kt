@@ -15,7 +15,7 @@ fun <X> printDetails( elements:List<X>) {
 fun <T : Number> numberLIsT(numbers: List<T>) {
         val sum = numbers.fold(0.0) { sum, element -> sum + element.toDouble() }
         println(sum)
-}
+} // added comments
 
 class Box<T>(val value: T)
 
